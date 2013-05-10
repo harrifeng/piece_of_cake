@@ -4,6 +4,7 @@ SRCFILES += src/my/helloworld.cc
 SRCFILES += src/my/worldhello.cc
 SRCFILES += src/leetcode/permute.cc
 SRCFILES += src/leetcode/valid_parentheses.cc
+SRCFILES += src/leetcode/valid_palindrome.cc
 SRCFILES += src/test.cc
 
 STDOBJ=$(patsubst src%.cc,build%.out, $(SRCFILES))
