@@ -16,5 +16,11 @@ build/%.out: src/%.cc
 	mkdir -p $(dir $@)
 	$(CXX) $< -o $@ $(CFLAGS) 
 
+run: build/test.out
+	@echo "<==========running the test.out=========>"
+	@echo
+	@./build/test.out
+	@echo
+	@echo "<==========test.out ends here===========>"
 clean :
 	rm -rf build
