@@ -15,7 +15,7 @@ bool compare(const Node &lhs, const Node &rhs) {
     return lhs.val < rhs.val;
 }
 
-vector<int> two_sum(vector<int> &numbers, int target) {
+vector<int> twoSum(vector<int> &numbers, int target) {
     vector<Node> a;
     for (int i = 0; i < numbers.size(); ++i) {
         a.push_back(Node(numbers[i], i+1));

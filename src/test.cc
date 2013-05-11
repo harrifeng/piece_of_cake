@@ -1,52 +1,32 @@
-#include <cstdio>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cassert>
+// sort algorithm example
+#include <iostream>     // std::cout
+#include <algorithm>    // std::sort
+#include <vector>       // std::vector
 
-using namespace std;
+bool myfunction (int i,int j) { return (i<j); }
 
-int lengthOfLongestSubstring(string s) {
-    int count[26];
-    memset(count, -1, 26 * sizeof(int));
-    int len = 0;
-    int max_len = 0;
-    for (int i = 0; i < 26; ++i) {
-        printf("%2c  ", 97+i);
-        // cout << count[i] << " ";
-    }
-    cout << endl;
+struct myclass {
+  bool operator() (int i,int j) { return (i<j);}
+} myobject;
 
-    for (int i = 0; i < s.size(); ++i, ++len) {
-        if (count[s[i] - 'a'] >= 0) {
-            for (int i = 0; i < 26; ++i) {
-                printf("%2d  ", count[i]);
-                // cout << count[i] << " ";
-            }
-            cout << endl << "--------------------------------------------------------------------------------------------------------" << endl;
-            max_len = std::max(len, max_len);
-            len = 0;
-            i = count[s[i] - 'a'] + 1;
-            memset(count , -1, 26 * sizeof(int));
-        }
-        count[s[i] - 'a'] = i;
-    }
-    return std::max(len, max_len);
+int main () {
+  int myints[] = {32,71,12,45,26,80,53,33};
+  std::vector<int> myvector (myints, myints+8);               // 32 71 12 45 26 80 53 33
+
+  // using default comparison (operator <):
+  std::sort (myvector.begin(), myvector.begin()+4);           //(12 32 45 71)26 80 53 33
+
+  // using function as comp
+  std::sort (myvector.begin()+4, myvector.end(), myfunction); // 12 32 45 71(26 33 53 80)
+
+  // using object as comp
+  std::sort (myvector.begin(), myvector.end(), myobject);     //(12 26 32 33 45 53 71 80)
+
+  // print out content:
+  std::cout << "myvector contains:";
+  for (std::vector<int>::iterator it=myvector.begin(); it!=myvector.end(); ++it)
+    std::cout << ' ' << *it;
+  std::cout << '\n';
+
+  return 0;
 }
-
-int main(int argc, char *argv[]) {
-    string str = "thgpgwkostwfhsgapkzwmzorfefwofihmoz";
-    for (int i = 0; i < str.size(); ++i) {
-        printf("%2d  ", i % 10);
-    }
-    cout << endl;
-    for (int i = 0; i < str.size(); ++i) {
-        printf("%2c  ", str[i]);
-    }
-    cout << endl;
-    cout << "--------------------------------------------------------------------------------------------------------" << endl;
-    cout << "--------------------------------------------------------------------------------------------------------" << endl;
-    cout << lengthOfLongestSubstring(str) << endl;
-    return 0;
-}
-
