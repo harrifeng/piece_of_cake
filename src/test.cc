@@ -4,51 +4,42 @@
 
 using namespace std;
 
-bool is_palindrome(string s) {
-    if (s.size() == 0) {
-        return true;
-    }
-    int count = 0;
-    int half = 0;
-    vector<char> sta;
-    
-    for (int i = 0; i < s.size(); ++i) {
-        if (isalnum(s[i])) {
-            ++count;
+vector<int> two_sum(vector<int> &numbers, int target) {
+    vector<int> result;
+    int beg = 0;
+    int end = numbers.size() - 1;
+
+    while (beg < end) {
+        if ((numbers[beg] + numbers[end]) == target) {
+            result.push_back(beg+1);
+            result.push_back(end+1);
+            return result;
+        } else if ((numbers[beg] + numbers[end]) > target) {
+            --end;
+        } else {
+            ++beg;
         }
     }
-    half = count / 2;
-    int index = 0;
-    while (half) {
-        if (isalnum(s[index])) {
-            sta.push_back(s[index]);
-            --half;
-        }
-        ++index;
-    }
-    if (count % 2 != 0 ) {
-        while(!isalnum(s[index])) {
-            index++;
-        }
-        ++index;
-    }
-    while(index < s.size()) {
-        if (isalnum(s[index])) {
-            if (toupper(sta.back()) == toupper(s[index])) {
-                sta.pop_back();
-            } else {
-                return false;
-            }
-        }
-        ++index;
-    }
-    return true;
+    return result;
 }
 
 int main(int argc, char *argv[]) {
-    printf("test is important!\n");
-    string ss = "ha1 bc de, f;gK gfedcb1aH";
-    cout << "ss is: [" << ss << "] and is palindrmoe is "
-         << is_palindrome(ss) << endl;
+    vector<int> num;
+    num.push_back(2);
+    num.push_back(7);
+    num.push_back(11);
+    num.push_back(15);
+
+    cout << num[0] << endl;
+    for (vector<int>::iterator ite = num.begin(); ite < num.end(); ++ite) {
+        cout << *ite << endl;
+    }
+
+    vector<int> show =  two_sum(num, 9);
+    printf("show end is %d\n", show[0]);
+    printf("show end is %d\n", show[1]);
+
+    // cout << "index1 " << show[0] << "index2 " << show[1] << endl;
+    
     return 0;
 }

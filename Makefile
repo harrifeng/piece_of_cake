@@ -1,23 +1,34 @@
 CXX = g++
 CFLAGS =
-SRCFILES += src/my/helloworld.cc 
-SRCFILES += src/my/worldhello.cc
-SRCFILES += src/leetcode/permute.cc
-SRCFILES += src/leetcode/valid_parentheses.cc
-SRCFILES += src/leetcode/valid_palindrome.cc
-SRCFILES += src/test.cc
 
-STDOBJ=$(patsubst src%.cc,build%.out, $(SRCFILES))
+MY_FILES += src/my/helloworld.cc 
+MY_FILES += src/my/worldhello.cc
 
-all: src
+LEET_FILES += src/leetcode/permute.cc
+LEET_FILES += src/leetcode/valid_parentheses.cc
+LEET_FILES += src/leetcode/valid_palindrome.cc
 
-src: $(STDOBJ)
+MY_OUT=$(patsubst src/my/%.cc,build/my/%.out, $(MY_FILES))
+LEET_OUT=$(patsubst src/leetcode/%.cc,build/leetcode/%.out, $(LEET_FILES))
+
+.PHONY : all clean
+
+all: my leet test
+
+# my is an example part------------------------------
+my: $(MY_OUT)
+
+# leet is for leetcode.com example code--------------
+leet : $(LEET_OUT)
+
+test : build/test.out
 
 build/%.out: src/%.cc
 	mkdir -p $(dir $@)
 	$(CXX) $< -o $@ $(CFLAGS) 
 
-run: build/test.out
+# run for test.cc to show test------------------------
+run: test
 	@echo "<==========running the test.out=========>"
 	@echo
 	@./build/test.out
