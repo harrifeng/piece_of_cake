@@ -1,66 +1,54 @@
 #include <cstdio>
 #include <iostream>
 #include <vector>
+#include <algorithm>
+#include <cassert>
 
 using namespace std;
 
-struct Node {
-    int val;
-    int index;
-    Node() {}
-    Node(int v, int idx) : val(v), index(idx) {}
-};
-
-bool compare(const Node &lhs, const Node &rhs) {
-    return lhs.val < rhs.val;
-}
-
-vector<int> two_sum(vector<int> &numbers, int target) {
-    vector<Node> a;
-    for (int i = 0; i < numbers.size(); ++i) {
-        a.push_back(Node(numbers[i], i+1));
+int find_median(int a[], int m, int b[], int n, int k) {
+    assert(a && b);
+    if (m <= 0) {
+        return b[k-1];
     }
-    sort(a.begin(), a.end(), compare);
-
-    int i = 0;
-    int j = numbers.size()  - 1;
-
-    while (i < j) {
-        int sum = a[i].val + a[j].val;
-        if (sum == target) {
-            vector<int> ret;
-            int minIndex = min(a[i].index, a[j].index);
-            int maxIndex = max(a[i].index, a[j].index);
-            ret.push_back(minIndex);
-            ret.push_back(maxIndex);
-            return ret;
-        } else if (sum < target) {
-            ++i;
+    if (n <= 0) {
+        return a[k-1];
+    }
+    if (k <= 1) {
+        return min(a[0], b[0]);
+    }
+    int half = (m/2 + n/2 + 1);
+    if (half >= k) {
+        if (a[m/2] > b[n/2]) {
+            return find_median(a, m/2, b, n, k);
         } else {
-            --j;
+            return find_median(a, m, b, n/2, k);
+        }
+    } else {
+        if (a[m/2] > b[n/2]) {
+            int q = n/2 + 1;
+            return find_median(a, m, b + q , n - q, k - q);
+        } else {
+            int q = m/2 + 1;
+            return find_median(a + q, m - q, b, n, k - q);
         }
     }
 }
 
-int main(int argc, char *argv[]) {
-    vector<int> num;
-    num.push_back(2);
-    num.push_back(1);
-    num.push_back(19);
-    num.push_back(4);
-    num.push_back(4);
-    num.push_back(56);
-    num.push_back(90);
-    num.push_back(3);
-
-    for (vector<int>::iterator ite = num.begin(); ite < num.end(); ++ite) {
-        cout << *ite << endl;
+double findMedianSortedArrays(int A[], int m, int B[], int n) {
+    if ((m + n) % 2 == 1) {
+        return find_median(A, m, B, n, (m+n)/2 + 1);
+    } else {
+        return (find_median(A, m, B, n, (m+n)/2 + 1) +
+                find_median(A, m, B, n, (m+n)/2)) / 2.0;
     }
-    cout << "------------------" << endl;
+}
 
-    vector<int> show =  two_sum(num, 8);
-    printf("small index is %d\n", show[0]);
-    printf("big index is %d\n", show[1]);
+int main(int argc, char *argv[]) {
+    int arra[6] = {1, 3, 5, 7, 9, 11};
+    int arrb[6] = {2, 4, 6, 8, 10, 12};
 
+    cout << findMedianSortedArrays(arra, 5, arrb, 6) << endl;
+    cout << findMedianSortedArrays(arra, 6, arrb, 6) << endl;
     return 0;
 }

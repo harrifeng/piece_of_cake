@@ -8,6 +8,7 @@ LEET_FILES += src/leetcode/permute.cc
 LEET_FILES += src/leetcode/valid_parentheses.cc
 LEET_FILES += src/leetcode/valid_palindrome.cc
 LEET_FILES += src/leetcode/two_sum.cc
+LEET_FILES += src/leetcode/median_of_two_sorted_arrays.cc
 
 MY_OUT=$(patsubst src/my/%.cc,build/my/%.out, $(MY_FILES))
 LEET_OUT=$(patsubst src/leetcode/%.cc,build/leetcode/%.out, $(LEET_FILES))
