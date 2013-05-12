@@ -1,6 +1,9 @@
 #include <cstdio>
+#include <cstdio>
+#include <cstring>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -58,7 +61,7 @@ int main(int argc, char *argv[]) {
     }
     cout << "------------------" << endl;
 
-    vector<int> show =  two_sum(num, 8);
+    vector<int> show =  twoSum(num, 8);
     printf("small index is %d\n", show[0]);
     printf("big index is %d\n", show[1]);
 
