@@ -1,32 +1,37 @@
-// sort algorithm example
-#include <iostream>     // std::cout
-#include <algorithm>    // std::sort
-#include <vector>       // std::vector
+#include <iostream>
+#include <algorithm>
 
-bool myfunction (int i,int j) { return (i<j); }
+using namespace std;
 
-struct myclass {
-  bool operator() (int i,int j) { return (i<j);}
-} myobject;
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
+};
 
-int main () {
-  int myints[] = {32,71,12,45,26,80,53,33};
-  std::vector<int> myvector (myints, myints+8);               // 32 71 12 45 26 80 53 33
+ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
+    ListNode* result = new ListNode(-1);
+    ListNode* pre = result;
+    ListNode* pa = l1;
+    ListNode* pb = l2;
 
-  // using default comparison (operator <):
-  std::sort (myvector.begin(), myvector.begin()+4);           //(12 32 45 71)26 80 53 33
+    int carry = 0;
 
-  // using function as comp
-  std::sort (myvector.begin()+4, myvector.end(), myfunction); // 12 32 45 71(26 33 53 80)
+    while (pa != NULL || pb != NULL) {
+        int av = (pa == NULL) ? 0 : pa->val;
+        int bv = (pb == NULL) ? 0 : pb->val;
+        ListNode* node = new ListNode((av+bv+carry) % 10);
+        carry = (av+bv+carry) / 10;
+        pre->next = node;
+        pre = pre->next;
+        pa = (pa == NULL) ? NULL : pa->next;
+        pb = (pb == NULL) ? NULL : pb->next;
+    }
+    if (carry > 0) {
+        pre->next = new ListNode(1);
+    }
 
-  // using object as comp
-  std::sort (myvector.begin(), myvector.end(), myobject);     //(12 26 32 33 45 53 71 80)
-
-  // print out content:
-  std::cout << "myvector contains:";
-  for (std::vector<int>::iterator it=myvector.begin(); it!=myvector.end(); ++it)
-    std::cout << ' ' << *it;
-  std::cout << '\n';
-
-  return 0;
+    pre = result->next;
+    delete result;
+    return pre;
 }
