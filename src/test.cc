@@ -1,6 +1,6 @@
-#include <iostream> 
+#include <iostream>
 #include <algorithm>
-#include <vector>   
+#include <vector>
 using namespace std;
 
 struct ListNode {
@@ -10,30 +10,51 @@ struct ListNode {
 };
 
 ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
-    int overflow = 0;
-    ListNode *ret = NULL;
-    ListNode **pnode = &ret;
-    while (l1 && l2) {
-        int val = l1->val + l2->val + overflow;
-        overflow = val / 10;
-        *pnode = new ListNode(val % 10);
-        pnode = &((*pnode)->next);
+    if (l1 == NULL && l2 == NULL) {
+        return NULL;
+    }
+
+    ListNode *head = NULL;
+    ListNode *pre = NULL;
+    int flag = 0;
+
+    while(l1 && l2) {
+        ListNode *node = new ListNode(l1->val + l2->val + flag);
+        flag = node->val / 10;
+        node->val %= 10;
+
+        if (head == NULL) {
+            head = node;
+        } else {
+            pre->next = node;
+        }
+        pre = node;
+
         l1 = l1->next;
         l2 = l2->next;
     }
-    ListNode *lremain = l1 ? l1 : l2;
+    ListNode *remain = l1 ? l1 : l2;
 
-    while (lremain) {
-        int val = lremain->val + overflow;
-        overflow = val / 10;
-        *pnode = new ListNode(val % 10);
-        pnode = &((*pnode)->next);
-        lremain = lremain->next;
+    while (remain) {
+        ListNode* node = new ListNode(remain->val + flag);
+        flag = node->val / 10;
+        node->val % 10;
+
+        if (head == NULL) {
+            head = node;
+        } else {
+            pre->next = node;
+        }
+
+        pre = node;
+
+        l1 = l1->next;
     }
-    if (overflow > 0) {
-        *pnode = new ListNode(overflow);
+    if (flag > 0) {
+        ListNode * node = new ListNode(flag);
+        pre->next = node;
     }
-    return ret;
+    return head;
 }
 
 int main(int argc, char *argv[]) {
@@ -53,4 +74,3 @@ int main(int argc, char *argv[]) {
     }
     return 0;
 }
-
