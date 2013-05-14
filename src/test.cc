@@ -3,49 +3,47 @@
 #include <vector>
 using namespace std;
 
+
 struct ListNode {
     int val;
     ListNode *next;
     ListNode(int x) : val(x), next(NULL) {}
 };
 
-ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
-    ListNode* result = new ListNode(-1);
-    ListNode* pre = result;
-    ListNode* pa = l1;
-    ListNode* pb = l2;
-
-    int carry = 0;
-
-    while (pa != NULL || pb != NULL) {
-        int av = (pa == NULL) ? 0 : pa->val;
-        int bv = (pb == NULL) ? 0 : pb->val;
-        ListNode* node = new ListNode((av+bv+carry) % 10);
-        carry = (av+bv+carry) / 10;
-        pre->next = node;
-        pre = pre->next;
-        pa = (pa == NULL) ? NULL : pa->next;
-        pb = (pb == NULL) ? NULL : pb->next;
+class Solution {
+public:
+    ListNode *removeNthFromEnd(ListNode *head, int n) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        ListNode *tmp = head;
+        for (int i = 0; i < n; ++i) {
+            head = head->next;
+        }
+        ListNode *forward = head;
+        head = tmp;
+        while(forward) {
+            forward = forward->next;
+            head = head->next;
+        }
+        head->val = head->next->val;
+        ListNode *todel = head->next;
+        head->next = head->next->next;
+        delete todel;
+        return tmp;
     }
-    if (carry > 0) {
-        pre->next = new ListNode(1);
-    }
+};
 
-    pre = result->next;
-    delete result;
-    return pre;
-}
 
 int main(int argc, char *argv[]) {
-    ListNode *head = new ListNode(2);
-    head->next = new ListNode(4);
+    ListNode *head = new ListNode(1);
+    head->next = new ListNode(2);
     head->next->next = new ListNode(3);
+    head->next->next->next = new ListNode(4);
+    head->next->next->next->next = new ListNode(5);
 
-    ListNode *another = new ListNode(5);
-    another->next = new ListNode(6);
-    another->next->next = new ListNode(4);
+    Solution* ss = new Solution();
 
-    ListNode *result = addTwoNumbers(head, another);
+    ListNode *result = ss->removeNthFromEnd(head, 2);
 
     while (result) {
         cout << result->val << endl;
