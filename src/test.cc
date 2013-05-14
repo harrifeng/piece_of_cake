@@ -3,57 +3,43 @@
 #include <vector>
 using namespace std;
 
-struct ListNode {
-    int val;
-    ListNode *next;
-    ListNode(int x) : val(x), next(NULL) {}
-};
-
 class Solution {
 public:
-    ListNode *removeNthFromEnd(ListNode *head, int n) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
-        ListNode *tmp = head;
-        ListNode *prev = head;
-        for (int i = 0; i < n; ++i) {
-            prev = head;
-            head = head->next;
-        }
-        if (head != NULL) {
-            ListNode *forward = head;
-            head = tmp;
-            while(forward) {
-                forward = forward->next;
-                prev = head;
-                head = head->next;
-            }
-            prev->next = head->next;
-            delete head;
-            return tmp;
-        } else {
-            prev = tmp->next;
-            delete tmp;
-            return prev;
-        }
+    vector<string> letterCombinations(string digits) {  
+        // Start typing your C/C++ solution below  
+        // DO NOT write int main() function  
+        string trans[] = {"", " ", "abc", "def", "ghi", "jkl",  
+                          "mno", "pqrs", "tuv", "wxyz"};  
+        vector<string> set;      
+        string seq;  
+        Generater(trans, digits, 0, seq, set);  
+        return set;  
+    }  
+    void Generater(string trans[], string& digits,   
+                   int deep, string& result, vector<string>& set){  
+        if(deep == digits.size())  
+        {  
+            set.push_back(result);  
+            return;  
+        }  
+        int curDig = digits[deep] - 48;  
+        for(int i =0; i < trans[curDig].size(); i++)  
+        {  
+            result.push_back(trans[curDig][i]);  
+            Generater(trans, digits, deep+1, result, set);  
+            result.resize(result.size() -1);  
+        }  
     }
 };
 
-
 int main(int argc, char *argv[]) {
-    ListNode *head = new ListNode(1);
-    head->next = new ListNode(2);
-    head->next->next = new ListNode(3);
-    head->next->next->next = new ListNode(4);
-    head->next->next->next->next = new ListNode(5);
-
     Solution* ss = new Solution();
 
-    ListNode *result = ss->removeNthFromEnd(head, 5);
+    vector<string> result = ss->letterCombinations("23");
 
-    while (result) {
-        cout << result->val << endl;
-        result = result->next;
+    for (int i = 0; i < result.size(); ++i) {
+        cout << result[i] << endl;
     }
+
     return 0;
 }
