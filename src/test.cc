@@ -5,28 +5,30 @@ using namespace std;
 
 class Solution {
 public:
-    int reverse(int x) {
-        int new_n = 0;
-        int left = 0;
-        while (x != 0) {
-            left = x % 10;
-            new_n = new_n * 10 + left;
-            x = x / 10;
+    string longestCommonPrefix(vector<string> &strs) {
+        string pre = "";
+        if (!strs.size()) return pre;
+        for (int i = 0; i < strs[0].size(); i++) {
+            pre += strs[0][i];             int j = 1;
+            for (; j < strs.size(); j++) {
+                if (pre != strs[j].substr(0, i+1)) break;
+            }
+            if (j != strs.size()) {
+                pre.erase(pre.size()-1, 1);
+                return pre;
+            }
         }
-        return new_n;
+        return pre;        
     }
-    bool isPalindrome(int x) {
-        if (x < 0) {
-            return false;
-        }
-        int rev_x = reverse(x);
-        return (rev_x == x);
-    }    
 };
 
 int main(int argc, char *argv[]) {
+    vector<string> input;
+    input.push_back("flower");
+    input.push_back("flow");
+    input.push_back("flight");
     Solution* ss = new Solution();
-    int result = ss->isPalindrome(1234321);
+    string result = ss->longestCommonPrefix(input);
     cout << result << endl;
 
     return 0;
