@@ -13,6 +13,7 @@ LEET_FILES += src/leetcode/longest_substring_without_repeating_characters.cc
 LEET_FILES += src/leetcode/add_two_numbers.cc
 LEET_FILES += src/leetcode/remove_nth_node_from_end_of_list.cc
 LEET_FILES += src/leetcode/reverse_integer.cc
+LEET_FILES += src/leetcode/palindrome_number.cc
 
 MY_OUT=$(patsubst src/my/%.cc,build/my/%.out, $(MY_FILES))
 LEET_OUT=$(patsubst src/leetcode/%.cc,build/leetcode/%.out, $(LEET_FILES))
