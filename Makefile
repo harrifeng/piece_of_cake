@@ -1,8 +1,12 @@
 CXX = g++
 CFLAGS =
 
+SORT_FILES += src/sort/insertion_sort.cc
+SORT_FILES += src/sort/shell_sort.cc
+
 MY_FILES += src/my/helloworld.cc 
 MY_FILES += src/my/worldhello.cc
+MY_FILES += src/my/level_print_btree.cc
 
 LEET_FILES += src/leetcode/permute.cc
 LEET_FILES += src/leetcode/valid_parentheses.cc
@@ -19,16 +23,20 @@ LEET_FILES += src/leetcode/longest_common_prefix.cc
 
 MY_OUT=$(patsubst src/my/%.cc,build/my/%.out, $(MY_FILES))
 LEET_OUT=$(patsubst src/leetcode/%.cc,build/leetcode/%.out, $(LEET_FILES))
+LEET_OUT=$(patsubst src/sort/%.cc,build/sort/%.out, $(SORT_FILES))
 
 .PHONY : all clean
 
-all: my leet test
+all: my leet sort test
 
 # my is an example part------------------------------
 my: $(MY_OUT)
 
 # leet is for leetcode.com example code--------------
 leet : $(LEET_OUT)
+
+# sort example summary------------------------------
+sort : $(sort_OUT)
 
 test : build/test.out
 
