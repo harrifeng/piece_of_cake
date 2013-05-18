@@ -23,7 +23,7 @@ LEET_FILES += src/leetcode/longest_common_prefix.cc
 
 MY_OUT=$(patsubst src/my/%.cc,build/my/%.out, $(MY_FILES))
 LEET_OUT=$(patsubst src/leetcode/%.cc,build/leetcode/%.out, $(LEET_FILES))
-LEET_OUT=$(patsubst src/sort/%.cc,build/sort/%.out, $(SORT_FILES))
+SORT_OUT=$(patsubst src/sort/%.cc,build/sort/%.out, $(SORT_FILES))
 
 .PHONY : all clean
 
