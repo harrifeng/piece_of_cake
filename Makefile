@@ -21,6 +21,7 @@ LEET_FILES += src/leetcode/palindrome_number.cc
 LEET_FILES += src/leetcode/letter_combinations_of_phone_number.cc
 LEET_FILES += src/leetcode/longest_common_prefix.cc
 LEET_FILES += src/leetcode/3_sum.cc
+LEET_FILES += src/leetcode/4_sum.cc
 
 MY_OUT=$(patsubst src/my/%.cc,build/my/%.out, $(MY_FILES))
 LEET_OUT=$(patsubst src/leetcode/%.cc,build/leetcode/%.out, $(LEET_FILES))
