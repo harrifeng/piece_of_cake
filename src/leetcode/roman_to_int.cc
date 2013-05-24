@@ -42,6 +42,6 @@ public:
 int main(int argc, char *argv[]) {
     Solution* ss = new Solution();
 
-    cout << ss->romanToInt("VI") << endl;
+    cout << ss->romanToInt("XII") << endl;
     return 0;
 }

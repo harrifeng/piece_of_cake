@@ -23,6 +23,7 @@ LEET_FILES += src/leetcode/longest_common_prefix.cc
 LEET_FILES += src/leetcode/3_sum.cc
 LEET_FILES += src/leetcode/4_sum.cc
 LEET_FILES += src/leetcode/atoi.cc
+LEET_FILES += src/leetcode/roman_to_int.cc
 
 MY_OUT=$(patsubst src/my/%.cc,build/my/%.out, $(MY_FILES))
 LEET_OUT=$(patsubst src/leetcode/%.cc,build/leetcode/%.out, $(LEET_FILES))
