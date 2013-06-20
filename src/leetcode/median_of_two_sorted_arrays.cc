@@ -1,22 +1,17 @@
 ///////////////////////////////////////////////////////////////////////////////
-// The two arrays are separated to four parts, if what we want is a median,
-// then the median will locate AT MOST THREE SECTIONS! (why? because one
-// quarter own at least one elements then, one quarter can not own over half
-// of the elements) so in each case, we remove one quarter
+// 1)这个题目主要的难点在于辅助函数 find_kth的设计,这个其实是一个递归函数, 递归
+//   函数上来就要设计退出的情形,在这个例子里面就是两个数组中有一个空了,或者k空了
+// 2)辅助函数设计出来了,其实问题就转换成在两个已经排序好的数组中寻找第k大的数,
+//   最后要根据奇偶性来分别求出中位数
 //
-//
-// 1)if (m/2+n/2+1) >= k, then the median is likely at lower value half, then
-//   left the two bigger value quarter, if one case that one array's values are
-//   all bigger than the other array. so we will select the biggest quarter
-//   (judged by the array[size/2], as the lower two quarters' value MUST
-//   lower than them.)
-// 2)if (m/2+n/2+1) < k, then the opposite side, the lowest quarter will be
-//   removed.
-// Note: the boundaries !!
-// 1) You have to judge between k and (m/2 + n/2 + 1), not with (m+n)/2 + 1
-// 2) Everytime, we drop a quarter also with one element more, as the one
-//    element has already be compared with its counterpart, and can not be
-//    the result!
+// 注意事项:
+// 1) 要比较k和(m/2 + n/2 + 1)之间的大小,而不要写成(m+n)/2 + 1, 比较的时候
+//    两个数组还是以不同数组的身份开始的
+// 2) 删除的时候,每次都尽量"多删一个", 比如 在find_kth(a, m/2, b, n, k)这个判断
+//    中,如果m是偶数,那么正好删除了一半, 但是如果m是奇数的话,那就刚好多删了一个!
+//    find_kth(a, m, b + q , n - q, k - q)这个判断中q = n/2 + 1, 如果n是偶数
+//    那就多删了一个, 如果n是奇数则刚刚好删除了一半. 这个例子告诉我们在边界问题
+//    上遇到要删除一半的时候, 肯定边界是多删一个没问题,多删两个就有可能错的.
 //
 // +----------------+  +----------------+
 // |                |  |                |
@@ -38,7 +33,7 @@
 
 using namespace std;
 
-int find_median(int a[], int m, int b[], int n, int k) {
+int find_kth(int a[], int m, int b[], int n, int k) {
     assert(a && b);
     if (m <= 0) {
         return b[k-1];
@@ -52,27 +47,27 @@ int find_median(int a[], int m, int b[], int n, int k) {
     int half = (m/2 + n/2 + 1);
     if (half >= k) {
         if (a[m/2] > b[n/2]) {
-            return find_median(a, m/2, b, n, k);
+            return find_kth(a, m/2, b, n, k);
         } else {
-            return find_median(a, m, b, n/2, k);
+            return find_kth(a, m, b, n/2, k);
         }
     } else {
         if (a[m/2] > b[n/2]) {
             int q = n/2 + 1;
-            return find_median(a, m, b + q , n - q, k - q);
+            return find_kth(a, m, b + q , n - q, k - q);
         } else {
             int q = m/2 + 1;
-            return find_median(a + q, m - q, b, n, k - q);
+            return find_kth(a + q, m - q, b, n, k - q);
         }
     }
 }
 
 double findMedianSortedArrays(int A[], int m, int B[], int n) {
     if ((m + n) % 2 == 1) {
-        return find_median(A, m, B, n, (m+n)/2 + 1);
+        return find_kth(A, m, B, n, (m+n)/2 + 1);
     } else {
-        return (find_median(A, m, B, n, (m+n)/2 + 1) +
-                find_median(A, m, B, n, (m+n)/2)) / 2.0;
+        return (find_kth(A, m, B, n, (m+n)/2 + 1) +
+                find_kth(A, m, B, n, (m+n)/2)) / 2.0;
     }
 }
 
