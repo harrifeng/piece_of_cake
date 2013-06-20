@@ -55,5 +55,10 @@ run: test
 	@./build/test.out
 	@echo
 	@echo "<==========test.out ends here===========>"
+
+%.run: %.out
+	@echo "<===============Output==================>"
+	@./$<
+
 clean :
 	rm -rf build
