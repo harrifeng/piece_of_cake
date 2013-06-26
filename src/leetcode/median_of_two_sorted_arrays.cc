@@ -12,7 +12,10 @@
 //    find_kth(a, m, b + q , n - q, k - q)这个判断中q = n/2 + 1, 如果n是偶数
 //    那就多删了一个, 如果n是奇数则刚刚好删除了一半. 这个例子告诉我们在边界问题
 //    上遇到要删除一半的时候, 肯定边界是多删一个没问题,多删两个就有可能错的.
-//
+// 3) 在这种删除一半一半的代码中,边界非常重要,差之毫厘谬以千里的情况就在"="情况
+//    的判断,具体到这个例子 [half >= k]这句为什么不是[half > k]呢, 因为在else
+//    的判断中, k要减去q, 这个时候我们要保守一点,要k足够大才去减, 在k == half
+//    的情况下,很可能减不够q, 所以我们选择把k==half放到前面的逻辑里面.
 // +----------------+  +----------------+
 // |                |  |                |
 // | A1,A2.....Am/2 |  |A(m/2+1).....Am |
@@ -33,49 +36,54 @@
 
 using namespace std;
 
-int find_kth(int a[], int m, int b[], int n, int k) {
-    assert(a && b);
-    if (m <= 0) {
-        return b[k-1];
-    }
-    if (n <= 0) {
-        return a[k-1];
-    }
-    if (k <= 1) {
-        return min(a[0], b[0]);
-    }
-    int half = (m/2 + n/2 + 1);
-    if (half >= k) {
-        if (a[m/2] > b[n/2]) {
-            return find_kth(a, m/2, b, n, k);
-        } else {
-            return find_kth(a, m, b, n/2, k);
-        }
-    } else {
-        if (a[m/2] > b[n/2]) {
-            int q = n/2 + 1;
-            return find_kth(a, m, b + q , n - q, k - q);
-        } else {
-            int q = m/2 + 1;
-            return find_kth(a + q, m - q, b, n, k - q);
-        }
-    }
-}
 
-double findMedianSortedArrays(int A[], int m, int B[], int n) {
-    if ((m + n) % 2 == 1) {
-        return find_kth(A, m, B, n, (m+n)/2 + 1);
-    } else {
-        return (find_kth(A, m, B, n, (m+n)/2 + 1) +
-                find_kth(A, m, B, n, (m+n)/2)) / 2.0;
+class Solution {
+    int find_kth(int a[], int m, int b[], int n, int k) {
+        if (m <= 0) {
+            return b[k-1];
+        }
+        if (n <= 0) {
+            return a[k-1];
+        }
+        if (k <= 1) {
+            return std::min(a[0], b[0]);
+        }
+        int half = m/2 + n/2 + 1;
+        if (k <= half) {
+            if (a[m/2] > b[n/2]) {
+                return find_kth(a, m/2, b, n, k);
+            } else {
+                return find_kth(a, m, b, n/2, k);
+            }
+        } else {
+            if (a[m/2] > b[n/2]) {
+                int q = n/2 + 1;
+                return find_kth(a, m, b+q, n-q, k-q);
+            } else {
+                int q = m/2 + 1;
+                return find_kth(a+q, m-q, b, n, k-q);
+            }
+        }
     }
-}
+public:
+    double findMedianSortedArrays(int A[], int m, int B[], int n) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if ((m+n) % 2 == 1) {
+            return find_kth(A, m, B, n, (m+n)/2 + 1);
+        } else {
+            return (find_kth(A, m, B, n, (m+n)/2 + 1) +
+                    find_kth(A, m, B, n, (m+n)/2)) / 2.0;
+        }
+    }
+};
 
 int main(int argc, char *argv[]) {
+    Solution* ss = new Solution();
     int arra[6] = {1, 3, 5, 7, 9, 11};
     int arrb[6] = {2, 4, 6, 8, 10, 12};
 
-    cout << findMedianSortedArrays(arra, 5, arrb, 6) << endl;
-    cout << findMedianSortedArrays(arra, 6, arrb, 6) << endl;
+    cout << ss->findMedianSortedArrays(arra, 5, arrb, 6) << endl;
+    cout << ss->findMedianSortedArrays(arra, 6, arrb, 6) << endl;
     return 0;
 }
