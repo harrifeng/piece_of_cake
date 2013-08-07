@@ -10,30 +10,25 @@ struct ListNode {
 };
 
 ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
-    ListNode* result = new ListNode(-1);
-    ListNode* pre = result;
-    ListNode* pa = l1;
-    ListNode* pb = l2;
-
+    ListNode *head = new ListNode(-1);
+    ListNode *mark = head;
     int carry = 0;
 
-    while (pa != NULL || pb != NULL) {
-        int av = (pa == NULL) ? 0 : pa->val;
-        int bv = (pb == NULL) ? 0 : pb->val;
-        ListNode* node = new ListNode((av+bv+carry) % 10);
-        carry = (av+bv+carry) / 10;
-        pre->next = node;
-        pre = pre->next;
-        pa = (pa == NULL) ? NULL : pa->next;
-        pb = (pb == NULL) ? NULL : pb->next;
-    }
-    if (carry > 0) {
-        pre->next = new ListNode(1);
-    }
+    while (l1 || l2) {
+	int total = (l1 ? (l1->val) : 0) + (l2 ? (l2->val) : 0) + carry;
+	carry = total / 10;
+	head->next = new ListNode(total % 10);
+	head = head->next;
 
-    pre = result->next;
-    delete result;
-    return pre;
+	l1 = (l1 == NULL ? NULL : l1->next);
+	l2 = (l2 == NULL ? NULL : l2->next);
+    }
+    if (carry) {
+	head->next = new ListNode(1);
+    }
+    head = mark ->next;
+    delete mark;
+    return head;
 }
 
 int main(int argc, char *argv[]) {
