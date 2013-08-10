@@ -1,3 +1,8 @@
+// 这个解法还是存在整形越界问题,可以用下面的思路来解决整形越界
+// bool addition_is_safe(uint32_t a, uint32_t b) {
+// 	size_t a_bits=highestOneBitPosition(a), b_bits=highestOneBitPosition(b);
+// 	return (a_bits<32 && b_bits<32);
+// }    
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -19,7 +24,7 @@ public:
 
 int main(int argc, char *argv[]) {
     Solution* ss = new Solution();
-    int result = ss->reverse(1234);
+    int result = ss->reverse(1234567893);
 
     cout << result << endl;
 
