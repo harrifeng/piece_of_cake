@@ -25,7 +25,7 @@ LEET_FILES += src/leetcode/4_sum.cc
 LEET_FILES += src/leetcode/atoi.cc
 LEET_FILES += src/leetcode/roman_to_int.cc
 LEET_FILES += src/leetcode/longest_palindrome_substring.cc
-LEET_FILES += src/leetcode/ZigZag_Conversion.cc
+LEET_FILES += src/leetcode/zigzag_conversion.cc
 LEET_FILES += src/leetcode/regular_express_match.cc
 
 MY_OUT=$(patsubst src/my/%.cc,build/my/%.out, $(MY_FILES))
