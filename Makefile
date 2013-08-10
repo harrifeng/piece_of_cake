@@ -27,6 +27,7 @@ LEET_FILES += src/leetcode/roman_to_int.cc
 LEET_FILES += src/leetcode/longest_palindrome_substring.cc
 LEET_FILES += src/leetcode/zigzag_conversion.cc
 LEET_FILES += src/leetcode/regular_express_match.cc
+LEET_FILES += src/leetcode/container_with_most_water.cc
 
 MY_OUT=$(patsubst src/my/%.cc,build/my/%.out, $(MY_FILES))
 LEET_OUT=$(patsubst src/leetcode/%.cc,build/leetcode/%.out, $(LEET_FILES))
