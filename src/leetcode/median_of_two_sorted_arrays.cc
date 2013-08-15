@@ -113,6 +113,13 @@ int main(int argc, char *argv[]) {
     int len_h = 3;
     float ex_4 = 2.0;
 
+    int arr_i[3] = {2, 3, 4};
+    int len_i = 3;
+    int arr_j[1] = {1};
+    int len_j = 1;
+    float ex_5 = 2.5;
+
+    
     TestCase t1(arr_a, len_a, arr_b, len_b, ex_1);
     t1.test_solution(ss);
 
@@ -125,5 +132,8 @@ int main(int argc, char *argv[]) {
     TestCase t4(arr_g, len_g, arr_h, len_h, ex_4);
     t4.test_solution(ss);
 
+    TestCase t5(arr_i, len_i, arr_j, len_j, ex_5);
+    t5.test_solution(ss);
+    
     return 0;
 }
