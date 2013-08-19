@@ -24,6 +24,7 @@ LEET_FILES += src/leetcode/3_sum.cc
 LEET_FILES += src/leetcode/4_sum.cc
 LEET_FILES += src/leetcode/atoi.cc
 LEET_FILES += src/leetcode/roman_to_int.cc
+LEET_FILES += src/leetcode/int_to_roman.cc 
 LEET_FILES += src/leetcode/longest_palindrome_substring.cc
 LEET_FILES += src/leetcode/zigzag_conversion.cc
 LEET_FILES += src/leetcode/regular_express_match.cc
