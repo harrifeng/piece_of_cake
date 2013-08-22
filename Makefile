@@ -1,5 +1,5 @@
 CXX = g++
-CFLAGS =
+CFLAGS = -g
 
 SORT_FILES += src/sort/insertion_sort.cc
 SORT_FILES += src/sort/shell_sort.cc
