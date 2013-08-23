@@ -55,31 +55,58 @@ public:
         delete[] cnt;
         return s.substr((center - 1 - maxlen) / 2, maxlen);
     }
+    string convert(string s, int nRows) {
+        if (nRows <= 1) {
+            return s;
+        }
+        string ret;
+        int modnum = nRows * 2 - 2;
+        int len = s.length();
+        string sum[2000];
+        for (int i = 0; i < len; i++) {
+            int newline = 0;
+            int mod = i % modnum;
+            if (mod >= nRows) {
+                sum[modnum - mod].push_back(s[i]);
+            } else {
+                sum[mod].push_back(s[i]);
+            }
+        }
+        for (int i = 0; i < nRows; i++) {
+            ret += sum[i];
+        }
+        return ret;
+    }
 };
 
 class TestCase
 {
     string inp;
+    int len;
     string exp;
 public:
-    TestCase(string input, string expected): inp(input), exp(expected){}
+    TestCase(string input, int length, string expected): inp(input), len(length), exp(expected){}
     void test_solution(Solution ss) {
+        string oup = ss.convert(inp, len);
         cout << "\n|--Test Casing------------------------------------|" << endl;
         cout << "|--Input String: \t[" << inp << "]" << endl;
+        cout << "|--ZigZag length: \t[" << len << "]" << endl;        
         cout << "|--Expe String: \t[" << exp << "]" << endl;        
-        cout << "|--Output String: \t[" << ss.longestPalindrome(inp) << "]" <<endl;
+        cout << "|--Output String: \t[" << oup << "]" <<endl;
+        cout << ((oup == exp) ? "Correct!" : "!!Wrong") << endl;
     }
 };
-
 
 int main(int argc, char *argv[])
 {
     Solution ss;
-    TestCase t1("123122346556453231", "465564");
+    cout << ss.convert("PAYPALISHIRING", 3) << endl; 
+    TestCase t1("ABCDEFGHIJKLMN", 2, "ACEGIKMBDFHJLN");
     t1.test_solution(ss);
-    TestCase t2("aaaa", "aaaa");
+    TestCase t2("ABCDEFGHIJKLMN", 3, "AEIMBDFHJLNCGK");
     t2.test_solution(ss);
+    TestCase t3("ABCDEFGHIJKLMN", 4, "AGMBFHLNCEIKDJ");
+    t3.test_solution(ss);
     return 0;
 }
-
 
