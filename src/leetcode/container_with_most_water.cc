@@ -8,7 +8,7 @@
 #include <vector>
 #include <algorithm>
 #include <string>
-
+#include <climits>
 using namespace std;
 
 class Solution {

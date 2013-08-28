@@ -1,10 +1,11 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
-#include <queue>
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <climits>
 using namespace std;
+
 class Solution {
 public:
     int atoi(const char *str) {
@@ -30,7 +31,13 @@ public:
             if (str[i] < '0' || str[i] > '9') {
                 break;
             }
-            if (INT_MAX / 10 < num || INT_MAX / 10 == num &&
+            //////////////////////////////////////////////////////////////
+            // 这里其实用到了c语言的逻辑判断.如果第一个部分是true的话||
+            // 后面的部分就不会再看了.所以其实是(1)||(2&&3)这样一种
+            // 逻辑结构
+            //////////////////////////////////////////////////////////////
+            if (INT_MAX / 10 < num ||
+                INT_MAX / 10 == num &&
                 INT_MAX % 10 < (str[i] - '0')) {
                 return (sign == -1) ? INT_MIN : INT_MAX;
                 break;
@@ -41,9 +48,12 @@ public:
     }
 };
 
-int main(int argc, char *argv[]) {
-    Solution* ss = new Solution();
 
-    cout << ss->atoi("   -12323 ") << endl;
+int main(int argc, char *argv[]) {
+    Solution ss;
+    cout << ss.atoi("2147483647") << endl;
+    cout << ss.atoi("2147483648") << endl;
+    cout << ss.atoi("-2147483648") << endl;
+    cout << ss.atoi("-2147483649") << endl;
     return 0;
 }
