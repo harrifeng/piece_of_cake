@@ -6,31 +6,50 @@
 using namespace std;
 
 class Solution {
-    bool multiple_is_safe(int a, int b) {
-        long long x=(unsigned long long)a*b;
-        if (x>INT_MAX || x < INT_MIN) return false;
-        return true;
-    }    
-        
 public:
-    int reverse(int x) {
-        int new_n = 0;
-        int left = 0;
-            
-        while (x != 0) {
-            left = x % 10;
-            assert(multiple_is_safe(new_n, 10)) ;
-            new_n = new_n * 10 + left;
-            x = x / 10;
+    ListNode *mergeKLists(vector<ListNode *> &lists) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        int cnt = lists.size();
+        int *front = new int[cnt];
+        // for (int i = 0; i < cnt; i++) {
+        //     if (lists != NULL) {
+        //         front[i] = 0;
+        //     } else {
+        //         front[i] = -1;
+        //     }
+        // }
+
+
+        ListNode *head = new ListNode(INT_MIN);
+        ListNode *tmp = head;
+        int index = 0;
+        int sum = 0;
+        head->next->val = INT_MAX;
+        while(1) {
+            for (int i = 0; i < cnt; i++) {
+                if (lists[front[i]] == NULL) {
+                    sum++;
+                    if (sum == cnt) {
+                        return tmp->next;
+                    }
+                } else if (lists[front[i]]->val < head->next->val) {
+                    head->next = lists[head[i]];
+                    index = i;
+                }
+            }
+            head = head->next;
+            head[index]++;
         }
-        return new_n;
+
+
+
+        
     }
 };
 
 int main(int argc, char *argv[]) {
     Solution* ss = new Solution();
 
-    cout << ss->reverse(INT_MAX-6) << endl;
-    cout << ss->reverse(INT_MIN+7) << endl;    
     return 0;
 }
