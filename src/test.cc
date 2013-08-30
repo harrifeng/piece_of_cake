@@ -18,8 +18,8 @@ public:
         ListNode *tmp = head;
         int index = 0;
         int sum = 0;
-        int pivot = INT_MAX;
         while(1) {
+            int pivot = INT_MAX;
             for (int i = 0; i < cnt; i++) {
                 if (lists[i] == NULL) {
                     sum++;
