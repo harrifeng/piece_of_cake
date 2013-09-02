@@ -40,6 +40,40 @@ public:
         }
         return tmp->next;
     }
+    ListNode *swapPairs(ListNode *head) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        ListNode* tmp = head;
+        ListNode* even = head;
+        ListNode* odd = head->next;
+        head = head->next->next;
+        int cnt = 2;
+        while (head) {
+            if (cnt % 2 == 0) {
+                even->next = head;
+                even = even->next;
+            } else {
+                odd->next = head;
+                odd = odd->next;
+            }
+            cnt++;
+            head = head->next;
+        }
+        even = tmp;
+        odd = tmp->next;
+        ListNode* ret = even;
+        for (int i = 1; i < cnt; i++) {
+            if (i % 2 == 0) {
+                ret->next = even;
+                even = even->next;
+            } else {
+                ret->next = odd;
+                odd = odd->next;
+            }
+            ret = ret->next;
+        }
+        return ret;
+    }    
 };
 
 
@@ -68,33 +102,11 @@ void display(ListNode* hd) {
 int main(int argc, char *argv[]) {
     Solution* ss = new Solution();
     
-    int array1[3] = {1, 3, 5};
-    ListNode* hd1 = get_list(array1, 3);
+    int array1[5] = {1, 2, 3, 4, 5};
+    ListNode* hd1 = get_list(array1, 5);
     display(hd1);
-    
-    int array2[3] = {2, 4, 7};
-    ListNode* hd2 = get_list(array2, 3);
-    display(hd2);
-    
-    vector<ListNode *> combine;
-    combine.push_back(hd1);
-    combine.push_back(hd2);
-    
-    ListNode* ret = ss->mergeKLists(combine);
-    display(ret);
 
-    // float sum = 0;
-    // for (int i = 0; i < 3; i++) {
-    //     sum += pow(2.0, i);
-    // }
-    // cout << sum << endl;
-    // int aaa = 7;
-    // aaa ^= (1 << 0);
-    // cout << aaa << endl;
-    // aaa ^= (1 << 1);
-    // cout << aaa << endl;
-    // aaa ^= (1 << 2);
-    // cout << aaa << endl;
-    // cout << (1 << 2) - 1 << endl;
+    ListNode* sw1 = ss->swapPairs(hd1);
+    display(sw1);    
     return 0;
 }
