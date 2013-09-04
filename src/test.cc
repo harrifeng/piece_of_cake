@@ -12,6 +12,14 @@ struct ListNode {
 };
 
 class Solution {
+void display(ListNode* hd) {
+    cout << "begin-inside------------>" << endl;
+    while (hd) {
+        cout << hd->val << endl;
+        hd = hd->next;
+    }
+    cout << "end-inside-------------->" << endl;    
+}
 public:
     ListNode *mergeKLists(vector<ListNode *> &lists) {
         int cnt = lists.size();
@@ -44,6 +52,7 @@ public:
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
         ListNode* tmp = head;
+        ListNode* tmp2 = head->next;
         ListNode* even = head;
         ListNode* odd = head->next;
         head = head->next->next;
@@ -59,20 +68,43 @@ public:
             cnt++;
             head = head->next;
         }
+        even->next = NULL;
+        odd->next = NULL;
         even = tmp;
-        odd = tmp->next;
-        ListNode* ret = even;
-        for (int i = 1; i < cnt; i++) {
-            if (i % 2 == 0) {
-                ret->next = even;
-                even = even->next;
-            } else {
-                ret->next = odd;
-                odd = odd->next;
-            }
+        odd = tmp2;
+        display(even);
+        display(odd);
+        // even = tmp;
+        // odd = tmp->next;
+        ListNode* ret = odd;
+        odd = odd->next;
+        while(even && odd) {
+            ret->next = even;
+            even = even->next;
             ret = ret->next;
+
+            ret->next = odd;
+            odd = odd->next;
+            ret = ret->next;
+
         }
-        return ret;
+        ListNode* left = ((even == NULL) ? odd : even);
+        ret->next = left;
+        // ret->next = NULL;
+        // for (int i = 1; i < cnt; i++) {
+        //     if (i % 2 == 0) {
+        //         ret->next = even;
+        //         even = even->next;
+        //     } else {
+        //         ret->next = odd;
+        //         odd = odd->next;
+        //     }
+        //     ret = ret->next;
+        // }
+        // ret->next = NULL;
+        display(tmp2);
+        // return ret;
+        return NULL;
     }    
 };
 
