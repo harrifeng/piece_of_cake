@@ -37,6 +37,7 @@ public:
                 l2 = tmp;
             }
         }
+        delete head;
         return head->next;
     }
     ListNode *mergeKLists(vector<ListNode *> &lists) {
