@@ -29,6 +29,52 @@ public:
             ppre = &(n0->next);
         }
     }
+    ListNode *reverseKGroup(ListNode *head, int k) {
+        int count = 0;
+        ListNode* tt = head;
+        while(tt) {
+            count++;
+            tt = tt->next;
+        }
+        if (count < k) {
+            return head;
+        }
+        count = 0;
+        vector<ListNode*> sk;
+        ListNode* tmp = head;
+        while(tmp) {
+            tmp = tmp->next;
+            count++;
+            if (count == (k-1)) {
+                break;
+            }
+        }
+        count = 0;
+        while (head) {
+            if (count == k-1) {
+                count = 0;
+                ListNode *gnext = head->next;
+                ListNode *first = head;
+                for (int i = 0; i < k-1; i++) {
+                    head->next = sk.back();
+                    head = head->next;
+                    sk.pop_back();
+                }
+                if (!sk.empty()) {
+                    sk.back()->next = first;
+                    sk.pop_back();
+                }
+                sk.push_back(head);
+                head->next = gnext;
+                head = gnext;
+            } else {
+                count++;
+                sk.push_back(head);
+                head = head->next;
+            }
+        }
+        return tmp;
+    }
 };
 
 
@@ -79,23 +125,23 @@ ListNode* get_list(int arr[], int len) {
     return tmp;
 }
 
+void display_list(ListNode *head) {
+    while(head) {
+        cout << head->val << " ";
+        head = head->next;
+    }
+    cout << endl << "----------------" << endl;
+}
+
 
 int main(int argc, char *argv[]) {
     Solution* ss = new Solution();
-    int arr1[6] = {1, 5, 7, 9, 11, 14};
-    int arr2[6] = {5, 1, 9, 7, 14, 11};
-    int arr3[5] = {3, 12, 13, 15, 234};
-    int arr4[7] = {12, 3, 15, 13, 234};
-    vector<int> expected_1(arr1, arr1+6);
-    vector<int> expected_2(arr3, arr3+5);
-
-    ListNode * input = get_list(arr2, 6);
-    TestCase *tc1 = new TestCase(input, expected_1);
-    tc1->test_solution(ss);
-
-    ListNode * input2 = get_list(arr4, 5);
-    TestCase *tc2 = new TestCase(input2, expected_2);
-    tc2->test_solution(ss);
+    int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
+    ListNode* hd = get_list(arr, 10);
+    display_list(hd);
+    ListNode* rt = ss->reverseKGroup(hd, 11);
+    display_list(rt);
     
+
     return 0;
 }
