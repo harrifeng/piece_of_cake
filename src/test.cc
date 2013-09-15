@@ -32,6 +32,9 @@ public:
     ListNode *reverseKGroup(ListNode *head, int k) {
         int count = 0;
         ListNode* tt = head;
+        if (k == 1) {
+            return head;
+        }
         while(tt) {
             count++;
             tt = tt->next;
@@ -137,9 +140,10 @@ void display_list(ListNode *head) {
 int main(int argc, char *argv[]) {
     Solution* ss = new Solution();
     int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
-    ListNode* hd = get_list(arr, 10);
+    int arr2[2] = {1, 2};
+    ListNode* hd = get_list(arr, 2);
     display_list(hd);
-    ListNode* rt = ss->reverseKGroup(hd, 11);
+    ListNode* rt = ss->reverseKGroup(hd, 1);
     display_list(rt);
     
 
