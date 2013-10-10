@@ -1,3 +1,11 @@
+///////////////////////////////////////////////////////////////////////////////
+// Given an array S of n integers, find three integers in S such that the    //
+// sum is closest to a given number, target. Return the sum of the three     //
+// integers. You may assume that each input would have exactly one solution. //
+//     For example, given array S = {-1 2 1 -4}, and target = 1.             //
+//     The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).         //
+///////////////////////////////////////////////////////////////////////////////
+
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -5,147 +13,53 @@
 #include <cassert>
 #include <cmath>
 using namespace std;
-struct ListNode {
-    ListNode* next;
-    int val;
-    ListNode(int value) : val(value), next(NULL) {}
-};
 
 class Solution {
 public:
-    ListNode *swapPairs(ListNode *head) {
-        ListNode **ppre = &head;
-        
-        while(true) {
-            ListNode *n0 = *ppre;
-            if(NULL == n0) return head;
-            ListNode *n1 = n0->next;
-            if(NULL == n1) return head;
-            
-            //swap n0 and n1
-            *ppre = n1;
-            n0->next = n1->next;
-            n1->next = n0;
-            ppre = &(n0->next);
+    int threeSumClosest(vector<int> &num, int target) {
+        if (num.size() < 3) {
+            return -1;
         }
-    }
-    ListNode *reverseKGroup(ListNode *head, int k) {
-        int count = 0;
-        ListNode* tt = head;
-        if (k == 1) {
-            return head;
-        }
-        while(tt) {
-            count++;
-            tt = tt->next;
-        }
-        if (count < k) {
-            return head;
-        }
-        count = 0;
-        vector<ListNode*> sk;
-        ListNode* tmp = head;
-        while(tmp) {
-            tmp = tmp->next;
-            count++;
-            if (count == (k-1)) {
-                break;
+        sort(num.begin(), num.end());
+        int record = 0;
+        int minV = INT_MAX;
+        for (int i = 0; i < num.size() - 2; i++) {
+            int start = i+1;
+            int end = num.size() - 1;
+            while (start < end) {
+                int sum = num[i] + num[start] + num[end];
+                if (sum == target) {
+                    minV = 0;
+                    record = sum;
+                    break;
+                } else if (sum < target) {
+                    if (target - sum < minV) {
+                        minV = target-sum;
+                        record = sum;
+                    }
+                    start++;
+                } else {
+                    if (sum - target < minV) {
+                        minV = sum - target;
+                        record = sum;
+                    }
+                    end--;
+                }
+            }
+            while (i < num.size() - 1 && num[i] == num[i+1]) {
+                i++;
             }
         }
-        count = 0;
-        while (head) {
-            if (count == k-1) {
-                count = 0;
-                ListNode *gnext = head->next;
-                ListNode *first = head;
-                for (int i = 0; i < k-1; i++) {
-                    head->next = sk.back();
-                    head = head->next;
-                    sk.pop_back();
-                }
-                if (!sk.empty()) {
-                    sk.back()->next = first;
-                    sk.pop_back();
-                }
-                sk.push_back(head);
-                head->next = gnext;
-                head = gnext;
-            } else {
-                count++;
-                sk.push_back(head);
-                head = head->next;
-            }
-        }
-        return tmp;
+        return record;
     }
 };
 
 
-class TestCase{
-    ListNode* lst;
-    vector<int> exp;
-public:
-    TestCase(ListNode *lists, vector<int>expected) : lst(lists),
-                                                             exp(expected) {}
-    bool test_solution(Solution *ss) {
-        cout << "\n|--Test Casing------------------------------------|" << endl;
-        ListNode* tmp = lst;
-        cout << "|--Input---->\t";
-        while (tmp) {
-            cout << tmp->val << " ";
-            tmp = tmp->next;
-        }
-        cout << endl;
-
-        ListNode* hd = ss->swapPairs(lst);
-        cout << "|--Output---->\t";
-        while (hd) {
-            cout << hd->val << " ";
-            hd = hd->next;
-        }
-        cout << endl;
-
-        cout << "|--Expected-->\t";
-        for (int i = 0; i < exp.size(); i++) {
-            cout << exp[i] << " ";
-        }
-        cout << endl;
-
-        return true;
-    }
-};
-
-ListNode* get_list(int arr[], int len) {
-    if (len < 2) {
-        return NULL;
-    }
-    ListNode* hd = new ListNode(arr[0]);
-    ListNode* tmp = hd;
-    for (int i = 1; i < len; i++) {
-        hd->next = new ListNode(arr[i]);
-        hd = hd->next;
-    }
-    return tmp;
-}
-
-void display_list(ListNode *head) {
-    while(head) {
-        cout << head->val << " ";
-        head = head->next;
-    }
-    cout << endl << "----------------" << endl;
-}
-
-
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
+    int arr[] = {-1, 2, 1, -4};
+    vector<int> vec(arr, arr+3);
     Solution* ss = new Solution();
-    int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
-    int arr2[2] = {1, 2};
-    ListNode* hd = get_list(arr, 2);
-    display_list(hd);
-    ListNode* rt = ss->reverseKGroup(hd, 1);
-    display_list(rt);
-    
-
+    cout << ss->threeSumClosest(vec, 1) << endl;
     return 0;
 }
