@@ -17,41 +17,55 @@ using namespace std;
 
 class Solution {
 public:
-    int removeDuplicates(int A[], int n) {
-        if (n == 0) {
-            return 0;
+    void s_range(int arr[], int start, int end, int target, vector<int>& ret) {
+        if (start > end) {
+            return;
         }
-        if (n == 1) {
-            return 1;
+        if (arr[start] == target) {
+            ret.push_back(start);
+            while (arr[start+1] == target && (start <= end)) {
+                start++;
+            }
+            ret.push_back(start);
+            return;
         }
-        if (n == 2) {
-            return (A[0] == A[1]) ? 1 : 2;
+        if (arr[end] == target) {
+            ret.push_back(end);
+            while (arr[end-1] == target && (start <= end) ) {
+                end--;
+            }
+            ret.push_back(end);
+            return;
         }
 
-        int beg = 0;
-        int end = 1;
-        while (end < n) {
-            if (A[beg] == A[end]) {
-                end++;
-            } else {
-                A[beg+1] = A[end];
-                beg++;
-                end++;
-            }
+        int mid = (start + end) / 2;
+
+        if (arr[mid] > target) {
+            return s_range(arr, start+1, mid, target, ret);
+        } else if (arr[mid] < target) {
+            return s_range(arr, mid, end-1, target, ret);
+        } else {
+            return s_range(arr, start+1, end-1, target, ret);
         }
-        return beg + 1;
     }
+    
+    vector<int> searchRange(int A[], int n, int target) {
+        
+        vector<int> ret;
+        s_range(A, 0, n-1, target, ret);
+        return ret;
+    }    
 };
 
 
 int main(int argc, char *argv[])
 {
     Solution* ss = new Solution();
-    int arr[] = {1, 1, 1, 1, 2, 3, 4, 5, 6, 6, 7, 7};
-    int newlen = ss->removeDuplicates(arr, 12);
-    cout << "new length is " << newlen << endl;
-    for (int i = 0; i < newlen; i++) {
-        cout << arr[i] << endl;
+    //          0   1  2  3  4  5  6  7  8  9  0  1  2  3  4  5  6  7  8  9
+    int arr[] = {1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9};
+    vector<int> result = ss->searchRange(arr, 20, 1);
+    for (int i = 0; i < result.size(); i++) {
+        cout << result[i] << endl;
     }
     return 0;
 }
