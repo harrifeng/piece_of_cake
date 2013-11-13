@@ -34,6 +34,7 @@ LEET_FILES += src/leetcode/gen_parenthesis.cc
 LEET_FILES += src/leetcode/merge_k_sorted.cc
 LEET_FILES += src/leetcode/swap_pairs.cc
 LEET_FILES += src/leetcode/rm_dup.cc
+LEET_FILES += src/leetcode/generate_parenthesis.cc
 
 MY_OUT=$(patsubst src/my/%.cc,build/my/%.out, $(MY_FILES))
 LEET_OUT=$(patsubst src/leetcode/%.cc,build/leetcode/%.out, $(LEET_FILES))
