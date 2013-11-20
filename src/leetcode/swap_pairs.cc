@@ -11,23 +11,38 @@ struct ListNode {
     ListNode(int value) : val(value), next(NULL) {}
 };
 
+// class Solution {
+// public:
+//     ListNode *swapPairs(ListNode *head) {
+//         ListNode **ppre = &head;
+//         
+//         while(true) {
+//             ListNode *n0 = *ppre;
+//             if(NULL == n0) return head;
+//             ListNode *n1 = n0->next;
+//             if(NULL == n1) return head;
+//             
+//             //swap n0 and n1
+//             *ppre = n1;
+//             n0->next = n1->next;
+//             n1->next = n0;
+//             ppre = &(n0->next);
+//         }
+//     }
+// };
+
 class Solution {
 public:
     ListNode *swapPairs(ListNode *head) {
-        ListNode **ppre = &head;
-        
-        while(true) {
-            ListNode *n0 = *ppre;
-            if(NULL == n0) return head;
-            ListNode *n1 = n0->next;
-            if(NULL == n1) return head;
-            
-            //swap n0 and n1
-            *ppre = n1;
-            n0->next = n1->next;
-            n1->next = n0;
-            ppre = &(n0->next);
+        if (head == NULL || head->next == NULL) {
+            return head;
         }
+        
+        ListNode* tmp = head->next->next;
+        ListNode* tmp2 = head->next;
+        head->next->next = head;
+        head->next = swapPairs(tmp);
+        return tmp2;
     }
 };
 
