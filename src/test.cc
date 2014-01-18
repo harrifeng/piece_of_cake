@@ -14,41 +14,8 @@
 #include <cmath>
 using namespace std;
 
-class Solution {
-    void append_par(int sl, int sr, string tmp, vector<string>& ret) {
-        if (sl ==0 && sr==0) {
-            ret.push_back(tmp);
-            return ;
-        }
-        if (sl > 0)  {
-            append_par(sl - 1, sr, tmp + '(', ret);
-        }
-        if (sr > sl) {
-            append_par(sl, sr - 1, tmp + ')', ret);
-        }
-    }
-public:
-    vector<string> generateParenthesis(int n) {
-        // IMPORTANT: Please reset any member data you declared, as
-        // the same Solution instance will be reused for each test case.
-        vector<string> result;
-        if (n == 0) {
-            return result;
-        }
-        string tt;
-        append_par(n, n, tt, result);
-        return result;
-    }
-};
-
 int main(int argc, char *argv[])
 {
-    Solution *ss = new Solution();
-    vector<string> res = ss->generateParenthesis(3);
-    for (int i = 0; i < res.size(); i++) {
-        cout << res[i] << endl;
-    }
+    cout << "hello" << endl;
     return 0;
 }
-
-
