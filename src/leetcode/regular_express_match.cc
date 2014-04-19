@@ -25,26 +25,30 @@ using namespace std;
 class Solution {
 public:
     bool isMatch(const char *s, const char *p) {
-	if (0 == *p) {
-	    return 0 == *s;
-	}
+        if (strlen(p) == 0) {
+            return strlen(s) == 0;
+        }
+        if (strlen(p) == 1) {
+            return (strlen(s) == 1) && (*p == '.' || *p == *s);
+        }
 
-	if (*(p+1) != '*') {
-	    if (*p == *s || (*p) == '.' && (*s) != 0) {
-		return isMatch(s+1, p+1);
-	    }
-	    return false;
-	} else {
-	    while (*p == *s || ((*p) == '.' &&(*s) != 0)) {
-		if (isMatch(s, p+2)) {
-		    return true;
-		}
-		s++;
-	    }
-	    return isMatch(s, p+2);
-	}
+        // next p is *
+        if (*(p+1) != '*')  {
+            return (strlen(s) >= 1 && (*p == *s || *p == '.'))
+                && isMatch(s+1, p+1);
+        }
+
+        // next p is not *
+        if (isMatch(s, p+2)) {
+            return true;
+        } else {
+            return (strlen(s) >= 1 && (*p == *s || *p == '.'))
+                && isMatch(s+1, p);
+        }
     }
 };
+
+
 
 class TestCase{
     string strs;
