@@ -1,21 +1,19 @@
-///////////////////////////////////////////////////////////////////////////////
-// Given an array S of n integers, find three integers in S such that the    //
-// sum is closest to a given number, target. Return the sum of the three     //
-// integers. You may assume that each input would have exactly one solution. //
-//     For example, given array S = {-1 2 1 -4}, and target = 1.             //
-//     The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).         //
-///////////////////////////////////////////////////////////////////////////////
-
 #include <iostream>
-#include <algorithm>
-#include <vector>
-#include <climits>
-#include <cassert>
-#include <cmath>
-using namespace std;
+#include <ext/hash_map>
+
 
 int main(int argc, char *argv[])
 {
-    cout << "hello" << endl;
+    using namespace __gnu_cxx;
+    hash_map<int, int> hs;
+    hs[1] = 3;
+    hs[2] = 6;
+
+    hash_map<int, int>::iterator iter;
+
+    for (iter = hs.begin(); iter != hs.end(); iter++) {
+        std::cout << (*iter).first << std::endl;
+        std::cout << (*iter).second << std::endl;
+    }
     return 0;
 }
